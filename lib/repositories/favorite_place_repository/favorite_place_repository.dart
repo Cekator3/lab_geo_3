@@ -1,5 +1,7 @@
+import 'package:http/http.dart' as http;
 import 'DTO/favorite_place_list_item.dart';
 import 'errors/get_all_favorite_places_errors.dart';
+import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 
 /// A subsystem for interacting with stored data
 /// on user's favorite geographic places.
