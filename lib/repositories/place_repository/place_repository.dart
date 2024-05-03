@@ -18,7 +18,7 @@ class PlaceRepository
   /// Retrieves a list of relevant geographic places
   ///
   /// Returns an empty list if error occurred.
-  Future<List<PlaceListItem>> find(FindPlaceViewModel place, FindPlaceErrors errors) async
+  Future<List<PlaceListItem>> find(FindPlaceViewModel search, FindPlaceErrors errors) async
   {
     // ...
   }
