@@ -103,7 +103,7 @@ class PlaceRepository
     return PlaceListItem(
       id: placeData['id'],
       name: placeData['name'],
-      address: placeData['address_name'],
+      address: placeData['address_name'] ?? '',
     );
   }
 

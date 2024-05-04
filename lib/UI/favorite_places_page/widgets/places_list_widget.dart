@@ -33,7 +33,10 @@ class PlacesListWidget extends StatelessWidget
                   place.getName(),
                   style: const TextStyle(color: Colors.black),
                 ),
-                subtitle: Text(place.getAddress()),
+                subtitle: Text(
+                  place.getAddress(),
+                  style: const TextStyle(color: Colors.black),
+                ),
                 onTap: ()
                 {
                   Navigator.push(

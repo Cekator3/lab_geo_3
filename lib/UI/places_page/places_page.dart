@@ -141,7 +141,13 @@ class PlacesPageState extends State<PlacesPage>
                         {
                           final titleStr = PlaceTypeLocalization.localize(type);
                           return CheckboxListTile(
-                            title: Text(titleStr),
+                            title: Text(
+                              titleStr,
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 16
+                              ),
+                            ),
                             value: _selectedPlaceTypes.contains(type),
                             onChanged: (value)
                             {
