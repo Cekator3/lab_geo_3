@@ -2,23 +2,16 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lab_geo_3/repositories/enums/place_type.dart';
-import 'package:lab_geo_3/repositories/favorite_place_repository/errors/get_all_favorite_places_errors.dart';
-import 'package:lab_geo_3/repositories/favorite_place_repository/favorite_place_repository.dart';
-import 'package:lab_geo_3/repositories/place_repository/DTO/place_list_item.dart';
-import 'package:lab_geo_3/repositories/place_repository/errors/find_place_errors.dart';
-import 'package:lab_geo_3/repositories/place_repository/place_repository.dart';
-import 'package:lab_geo_3/repositories/place_repository/view_models/find_place_view_model.dart';
 
-class FoodApp extends StatefulWidget
+class GeoApp extends StatefulWidget
 {
-  const FoodApp({super.key});
+  const GeoApp({super.key});
 
   @override
-  FoodAppState createState() => FoodAppState();
+  GeoAppState createState() => GeoAppState();
 }
 
-class FoodAppState extends State<FoodApp>
+class GeoAppState extends State<GeoApp>
 {
   int currentIndex = 0;
 
@@ -33,7 +26,7 @@ class FoodAppState extends State<FoodApp>
     }
 
     return MaterialApp(
-        title: 'Еда',
+        title: 'Гео',
         theme: ThemeData(
             useMaterial3: true,
             colorScheme: const ColorScheme.light(
@@ -95,28 +88,6 @@ class FoodAppState extends State<FoodApp>
 
 void main() async
 {
-  final places = PlaceRepository();
-  final search = FindPlaceViewModel(query: 'Югорский государственный университет', city: 'Ханты-мансийск', placeTypes: [PlaceType.branch]);
-  final errors = FindPlaceErrors();
-  List<PlaceListItem> findedPlaces = await places.find(search, errors);
-
-  final favoritePlaces = FavoritePlaceRepository();
-  await favoritePlaces.init();
-  final errors2 = GetAllFavoritePlacesErrors();
-
-  for (PlaceListItem place in findedPlaces)
-    favoritePlaces.add(place.getId());
-
-  final lol = await favoritePlaces.getAll(errors2);
-  final lol2 = await favoritePlaces.getAll(errors2);
-
-  for (final place in (await favoritePlaces.getAll(errors2)))
-  {
-    favoritePlaces.remove(place.getId());
-  }
-
-  final lol3 = await favoritePlaces.getAll(errors2);
-
-  FoodApp app = const FoodApp();
+  GeoApp app = const GeoApp();
   runApp(app);
 }

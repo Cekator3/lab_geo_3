@@ -3,7 +3,7 @@
 import 'dart:convert';
 import '../../config.dart';
 import 'package:http/http.dart' as http;
-import 'favorite_places_identifiers.dart';
+import 'favorite_places_identifiers_repository.dart';
 import 'DTO/favorite_place_list_item.dart';
 import 'errors/get_all_favorite_places_errors.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
