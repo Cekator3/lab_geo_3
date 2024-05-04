@@ -1,3 +1,5 @@
+// ignore_for_file: curly_braces_in_flow_control_structures
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lab_geo_3/repositories/enums/place_type.dart';
@@ -5,11 +7,8 @@ import 'package:lab_geo_3/repositories/favorite_place_repository/errors/get_all_
 import 'package:lab_geo_3/repositories/favorite_place_repository/favorite_place_repository.dart';
 import 'package:lab_geo_3/repositories/place_repository/DTO/place_list_item.dart';
 import 'package:lab_geo_3/repositories/place_repository/errors/find_place_errors.dart';
-import 'package:lab_geo_3/repositories/place_repository/errors/get_place_errors.dart';
 import 'package:lab_geo_3/repositories/place_repository/place_repository.dart';
 import 'package:lab_geo_3/repositories/place_repository/view_models/find_place_view_model.dart';
-
-import 'repositories/place_repository/DTO/place.dart';
 
 class FoodApp extends StatefulWidget
 {
@@ -102,11 +101,21 @@ void main() async
   List<PlaceListItem> findedPlaces = await places.find(search, errors);
 
   final favoritePlaces = FavoritePlaceRepository();
+  await favoritePlaces.init();
+  final errors2 = GetAllFavoritePlacesErrors();
 
   for (PlaceListItem place in findedPlaces)
+    favoritePlaces.add(place.getId());
+
+  final lol = await favoritePlaces.getAll(errors2);
+  final lol2 = await favoritePlaces.getAll(errors2);
+
+  for (final place in (await favoritePlaces.getAll(errors2)))
   {
-    final errors2 = GetAllFavoritePlacesErrors();
+    favoritePlaces.remove(place.getId());
   }
+
+  final lol3 = await favoritePlaces.getAll(errors2);
 
   FoodApp app = const FoodApp();
   runApp(app);

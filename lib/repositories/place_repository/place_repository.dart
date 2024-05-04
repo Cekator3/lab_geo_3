@@ -47,7 +47,6 @@ class PlaceRepository
     if (data == null)
       return null;
 
-    // Convert to Place object
     return Place(
       id: data['id'],
       name: data['name'],
@@ -61,7 +60,7 @@ class PlaceRepository
   {
     // Get place's data from API
     String key = Config.API_KEY_2GIS;
-    Uri uri = Uri.parse('https://catalog.api.2gis.com/3.0/items/byid?id=$id&key=${key}');
+    Uri uri = Uri.parse('https://catalog.api.2gis.com/3.0/items/byid?id=$id&key=$key');
     http.Response response = await http.get(uri);
 
     if (response.statusCode != 200)
@@ -92,7 +91,7 @@ class PlaceRepository
   {
     List<String> result = [];
 
-    // Here bugs can happen
+    // Here bugs can happen (don't care)
     for (PlaceType placeType in placeTypes)
       result.add(placeType.name);
 
@@ -134,7 +133,7 @@ class PlaceRepository
   {
     // Generating URL
     String placeTypes = _convertPlaceTypesToString(search.placeTypes);
-    String url = 'https://catalog.api.2gis.com/3.0/items?q=${search.query + ' ' + search.city}';
+    String url = 'https://catalog.api.2gis.com/3.0/items?q=${'${search.query} ${search.city}'}';
     if (placeTypes.isNotEmpty)
       url += '&type=$placeTypes';
     url += '&locale=ru_RU&key=${Config.API_KEY_2GIS}';

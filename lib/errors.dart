@@ -6,7 +6,9 @@ abstract class Errors
 {
 	int _errors = 0;
 
-	/// Adds [error]
+	/// Adds `error`.
+  ///
+  /// If `error` already exists, nothing will happen.
   void add(int error)
   {
     _errors |= error;
