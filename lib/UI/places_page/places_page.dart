@@ -145,7 +145,7 @@ class PlacesPageState extends State<PlacesPage>
                               titleStr,
                               style: const TextStyle(
                                 color: Colors.black,
-                                fontSize: 16
+                                fontSize: 14
                               ),
                             ),
                             value: _selectedPlaceTypes.contains(type),
