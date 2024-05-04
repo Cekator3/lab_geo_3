@@ -1,13 +1,10 @@
 // ignore_for_file: curly_braces_in_flow_control_structures
 
 import 'package:flutter/material.dart';
-import 'package:lab_geo_3/repositories/favorite_place_repository/DTO/favorite_place_list_item.dart';
-import 'package:lab_geo_3/repositories/favorite_place_repository/favorite_place_repository.dart';
-import 'package:lab_geo_3/repositories/favorite_place_repository/favorite_places_identifiers_repository.dart';
-import 'package:lab_geo_3/repositories/place_repository/errors/get_place_errors.dart';
-import 'package:lab_geo_3/repositories/place_repository/place_repository.dart';
-
+import '../../repositories/favorite_place_repository/favorite_place_repository.dart';
 import '../../repositories/place_repository/DTO/place.dart';
+import '../../repositories/place_repository/errors/get_place_errors.dart';
+import '../../repositories/place_repository/place_repository.dart';
 import 'widgets/place_main_info_widget.dart';
 
 class PlaceDetailsPage extends StatefulWidget

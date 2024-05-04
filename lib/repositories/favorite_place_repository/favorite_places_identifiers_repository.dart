@@ -37,7 +37,7 @@ class FavoritePlacesIdentifiersRepository
     if (favoritePlacesIds.contains(placeId))
       return;
 
-    favoritePlacesIds.add(placeId);
+    favoritePlacesIds.insert(0, placeId);
     _setIdentifiers(favoritePlacesIds);
   }
 

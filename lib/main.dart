@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lab_geo_3/UI/favorite_places_page/favorite_places_page.dart';
 
 import 'UI/places_page/places_page.dart';
 
@@ -66,7 +67,7 @@ class GeoAppState extends State<GeoApp>
             index: currentIndex,
             children: const [
               PlacesPage(),
-              // FavoriteFoodsPage()
+              FavoritePlacesPage()
             ],
           ),
           bottomNavigationBar: BottomNavigationBar(

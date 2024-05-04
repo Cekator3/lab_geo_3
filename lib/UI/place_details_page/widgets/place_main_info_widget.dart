@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:lab_geo_3/UI/localization/place_type_localization.dart';
 
 import '../../../repositories/place_repository/DTO/place.dart';
+import '../../localization/place_type_localization.dart';
 
 /// A subsystem for displaying widget with general information about food
 /// on the "Place details" page for the user.
