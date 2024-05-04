@@ -87,6 +87,7 @@ class PlaceRepository
     return _getFromApi(id, errors);
   }
 
+
   String _convertPlaceTypesToString(List<PlaceType> placeTypes)
   {
     List<String> result = [];
