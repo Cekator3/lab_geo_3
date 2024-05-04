@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'UI/places_page/places_page.dart';
+
 class GeoApp extends StatefulWidget
 {
   const GeoApp({super.key});
@@ -26,7 +28,8 @@ class GeoAppState extends State<GeoApp>
     }
 
     return MaterialApp(
-        title: 'Гео',
+        title: 'Справочник путешественника',
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
             useMaterial3: true,
             colorScheme: const ColorScheme.light(
@@ -62,7 +65,7 @@ class GeoAppState extends State<GeoApp>
           body: IndexedStack(
             index: currentIndex,
             children: const [
-              // FoodsPage(),
+              PlacesPage(),
               // FavoriteFoodsPage()
             ],
           ),
