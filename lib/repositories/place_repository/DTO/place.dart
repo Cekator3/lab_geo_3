@@ -8,9 +8,9 @@ class Place
   final String _name;
   final String _address;
   final PlaceType _type;
-  final String _purpose;
+  final String? _purpose;
 
-  Place({required String id, required String name, required String address, required PlaceType type, required String purpose}) : _id = id, _name = name, _address = address, _type = type, _purpose = purpose;
+  Place({required String id, required String name, required String address, required PlaceType type, required String? purpose}) : _id = id, _name = name, _address = address, _type = type, _purpose = purpose;
 
   /// Returns geographic place's identifier
   String getId() => _id;
@@ -25,5 +25,5 @@ class Place
   PlaceType getType() => _type;
 
   /// Returns geographic place's purpose
-  String getPurpose() => _purpose;
+  String? getPurpose() => _purpose;
 }

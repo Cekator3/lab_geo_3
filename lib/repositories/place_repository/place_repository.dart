@@ -1,15 +1,13 @@
 // ignore_for_file: curly_braces_in_flow_control_structures
 
 import 'dart:convert';
-
-import 'package:lab_geo_3/config.dart';
-
-import '../enums/place_type.dart';
 import 'DTO/place.dart';
-import 'package:http/http.dart' as http;
+import '../enums/place_type.dart';
 import 'DTO/place_list_item.dart';
-import 'errors/find_place_errors.dart';
 import 'errors/get_place_errors.dart';
+import 'errors/find_place_errors.dart';
+import 'package:lab_geo_3/config.dart';
+import 'package:http/http.dart' as http;
 import 'view_models/find_place_view_model.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 
@@ -42,9 +40,28 @@ class PlaceRepository
     }
   }
 
+  Place? _convertApiDataToPlace(http.Response response)
+  {
+    Map<String, dynamic>? data = jsonDecode(response.body)['result']?['items'][0];
+
+    if (data == null)
+      return null;
+
+    // Convert to Place object
+    return Place(
+      id: data['id'],
+      name: data['name'],
+      address: data['address_name'],
+      purpose: data['purpose_name'],
+      type: _getPlaceTypeFromApiString(data['type']) ?? PlaceType.branch,
+    );
+  }
+
   Future<Place?> _getFromApi(String id, GetPlaceErrors errors) async
   {
-    Uri uri = Uri.parse('https://catalog.api.2gis.com/3.0/items/byid?id=$id&key=${Config.API_KEY_2GIS}');
+    // Get place's data from API
+    String key = Config.API_KEY_2GIS;
+    Uri uri = Uri.parse('https://catalog.api.2gis.com/3.0/items/byid?id=$id&key=${key}');
     http.Response response = await http.get(uri);
 
     if (response.statusCode != 200)
@@ -53,16 +70,7 @@ class PlaceRepository
       return null;
     }
 
-    // Convert to Place object
-    Map<String, dynamic> data = jsonDecode(response.body)['result']['items'][0];
-
-    return Place(
-      id: data['id'],
-      name: data['name'],
-      address: data['address_name'],
-      purpose: data['purpose_name'],
-      type: _getPlaceTypeFromApiString(data['type']) ?? PlaceType.branch,
-    );
+    return _convertApiDataToPlace(response);
   }
 
   /// Retrieves information about geographic place.
@@ -83,12 +91,43 @@ class PlaceRepository
   {
     List<String> result = [];
 
-    // Here bugs can happen (don't care)
+    // Here bugs can happen
     for (PlaceType placeType in placeTypes)
       result.add(placeType.name);
 
     return result.join(',');
   }
+
+  PlaceListItem _convertApiDataToPlaceListItem(Map<String, dynamic> placeData)
+  {
+    return PlaceListItem(
+      id: placeData['id'],
+      name: placeData['name'],
+      address: placeData['address_name'],
+    );
+  }
+
+  List<PlaceListItem> _convertApiDataToPlacesList(http.Response response)
+  {
+    List<PlaceListItem> result = [];
+    List? placesData = jsonDecode(response.body)['result']?['items'];
+
+    if (placesData == null)
+      return [];
+
+    for (Map<String, dynamic> placeData in placesData)
+    {
+      // Skip if PlaceType not exists
+      PlaceType? type = _getPlaceTypeFromApiString(placeData['type']);
+      if (type == null)
+        continue;
+
+      result.add(_convertApiDataToPlaceListItem(placeData));
+    }
+
+    return result;
+  }
+
 
   Future<List<PlaceListItem>> _findFromApi(FindPlaceViewModel search, FindPlaceErrors errors) async
   {
@@ -99,16 +138,16 @@ class PlaceRepository
       url += '&type=$placeTypes';
     url += '&locale=ru_RU&key=${Config.API_KEY_2GIS}';
 
-    // Fetching data from API
+    // Fetching places array from API
     http.Response response = await http.get(Uri.parse(url));
+
     if (response.statusCode != 200)
     {
       errors.add(errors.INTERNAL);
       return [];
     }
 
-    // Converting HTTP-response to PlaceListItem objects
-    Map<String, dynamic> data = jsonDecode(response.body)['result']['items'][0];
+    return _convertApiDataToPlacesList(response);
   }
 
   /// Retrieves a list of relevant geographic places
@@ -121,5 +160,6 @@ class PlaceRepository
       errors.add(errors.INTERNET_CONNECTION_MISSING);
       return [];
     }
+    return _findFromApi(search, errors);
   }
 }

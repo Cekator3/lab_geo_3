@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lab_geo_3/repositories/place_repository/DTO/place_list_item.dart';
+import 'package:lab_geo_3/repositories/place_repository/errors/find_place_errors.dart';
+import 'package:lab_geo_3/repositories/place_repository/errors/get_place_errors.dart';
+import 'package:lab_geo_3/repositories/place_repository/place_repository.dart';
+import 'package:lab_geo_3/repositories/place_repository/view_models/find_place_view_model.dart';
+
+import 'repositories/place_repository/DTO/place.dart';
 
 class FoodApp extends StatefulWidget
 {
@@ -86,6 +93,17 @@ class FoodAppState extends State<FoodApp>
 
 void main() async
 {
-    FoodApp app = const FoodApp();
-    runApp(app);
+  final places = PlaceRepository();
+  final search = FindPlaceViewModel(query: 'Югорский государственный университет', city: 'Ханты-мансийск', placeTypes: []);
+  final errors = FindPlaceErrors();
+  List<PlaceListItem> findedPlaces = await places.find(search, errors);
+
+  for (PlaceListItem place in findedPlaces)
+  {
+    final errors2 = GetPlaceErrors();
+    Place? placeInfo = await places.get(place.getId(), errors2);
+    print(placeInfo);
+  }
+  FoodApp app = const FoodApp();
+  runApp(app);
 }

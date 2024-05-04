@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 /// Subsystem for storing app's configuration.
 class Config
 {
